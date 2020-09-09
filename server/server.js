@@ -4,6 +4,9 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const connectDB = require("./db/connectMongoDB");
 
+// Load Routes
+const userRoutes = require("./routes/users");
+
 // ExpressJS App
 const app = express();
 
@@ -18,9 +21,12 @@ app.use(express.json()); // Body Parser
 app.use(cors()); // CORS
 
 // Development mode logging
-if (process.env.NODE_ENV) {
+if ((process.env.NODE_ENV = "development")) {
   app.use(morgan("dev"));
 }
+
+// Mount Routes
+app.use("/api/v1/users", userRoutes);
 
 // PORT
 const PORT = process.env.PORT || 5000;

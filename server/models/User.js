@@ -28,7 +28,6 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     minlength: 8,
-    maxlength: 30,
     required: [true, "Please add password"],
   },
 });
@@ -39,13 +38,9 @@ UserSchema.methods.matchPassword = async (password) => {
 }; // Match entered password with db password
 
 UserSchema.methods.jwtSignToken = async (id) => {
-  const jwtSignedToken = await jwt.sign(
-    { id: this._id },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXPIRE,
-    }
-  );
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
 }; // Sign token and return signed token
 
 module.exports = mongoose.model("User", UserSchema);
