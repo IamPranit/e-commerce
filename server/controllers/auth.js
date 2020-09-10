@@ -36,9 +36,11 @@ exports.userLogin = async (req, res, next) => {
   }
 };
 
+// Send JWT
 const jwtSend = async (user, status, res) => {
-  // Signed JWT
+  // Signed JWT / Create JWT
   const token = user.jwtSignToken();
+  console.log(token);
 
   res
     .status(200)

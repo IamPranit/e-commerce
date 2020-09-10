@@ -50,15 +50,7 @@ const getUser = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     // New user data
-    const newUser = req.body;
-    console.log(newUser);
-    // Hash Password
-    hashedPassword = await bcrypt.hash(newUser.password, saltRounds);
-
-    // Set Password
-    newUser.password = hashedPassword;
-
-    const user = await User.create(newUser);
+    const user = await User.create(req.body);
 
     res.status(201).json({
       success: true,
@@ -75,11 +67,20 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const updatedUser = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+
+    // UserSchema.pre("save") does not work on PUT requests.
+    // You cannot access the document being updated in pre('updateOne') or pre('findOneAndUpdate') query middleware. If you need to access the document that will be updated, you need to execute an explicit query for the document.
+    // For PUT requests
+    if (updatedUser.password) {
+      hashedPassword = await bcrypt.hash(updatedUser.password, saltRounds);
+
+      updatedUser.password = hashedPassword;
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, updatedUser, {
       new: true,
       runValidators: true,
     });
-
     res.status(200).json({
       success: true,
       data: user,

@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+// BCrypt
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -30,6 +33,15 @@ const UserSchema = new mongoose.Schema({
     minlength: 8,
     required: [true, "Please add password"],
   },
+});
+
+// Hash Password before saving it to the Database
+// By using arrow function inside of UserSchema.pre the value of "this" break hence use normal function syntax not ES6 syntax.
+UserSchema.pre("save", async function () {
+  // Hash Password with bcrypt
+  const hashedPassword = await bcrypt.hash(this.password, saltRounds);
+
+  this.password = hashedPassword;
 });
 
 // JWT

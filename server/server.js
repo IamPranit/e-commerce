@@ -6,6 +6,7 @@ const connectDB = require("./db/connectMongoDB");
 
 // Load Routes
 const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
 
 // ExpressJS App
 const app = express();
@@ -27,6 +28,7 @@ if ((process.env.NODE_ENV = "development")) {
 
 // Mount Routes
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 // PORT
 const PORT = process.env.PORT || 5000;
