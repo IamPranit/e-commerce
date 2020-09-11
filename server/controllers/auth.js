@@ -38,17 +38,20 @@ exports.userLogin = async (req, res, next) => {
 
 // Send JWT
 const jwtSend = async (user, status, res) => {
-  // Signed JWT / Create JWT
-  const token = user.jwtSignToken();
-  console.log(token);
+  try {
+    // Signed JWT / Create JWT
+    const token = await user.jwtSignToken(user._id);
 
-  res
-    .status(200)
-    .cookie("jwtAuth", token, {
-      maxAge: 24 * 60 * 60 * 1000,
-    })
-    .json({
-      success: true,
-      token,
-    });
+    res
+      .status(200)
+      .cookie("jwtAuth", token, {
+        maxAge: 24 * 60 * 60 * 1000,
+      })
+      .json({
+        success: true,
+        token,
+      });
+  } catch (err) {
+    console.log(err);
+  }
 };

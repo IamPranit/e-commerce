@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const connectDB = require("./db/connectMongoDB");
+const cookieParser = require("cookie-parser");
 
 // Load Routes
 const userRoutes = require("./routes/users");
@@ -20,6 +21,7 @@ connectDB();
 // Middlewares
 app.use(express.json()); // Body Parser
 app.use(cors()); // CORS
+app.use(cookieParser()); // Cookie Parser
 
 // Development mode logging
 if ((process.env.NODE_ENV = "development")) {

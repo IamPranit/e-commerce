@@ -2,10 +2,10 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const jwtAuthenticate = async (req, res, next) => {
-  const token = req.cookies.authToken;
+  const token = req.cookies.jwtAuth;
 
   if (!token) {
-    res.status(400).json({
+    return res.status(400).json({
       success: true,
       message: `User not authorized!`,
     });
@@ -21,3 +21,5 @@ const jwtAuthenticate = async (req, res, next) => {
     console.log(err);
   }
 };
+
+module.exports = jwtAuthenticate;
