@@ -22,15 +22,15 @@ exports.userLogin = async (req, res, next) => {
       });
     }
 
-    const credMatch = user.matchPassword(password);
+    const credMatch = await user.matchPassword(password);
 
-    if (!credMatch) {
+    if (credMatch) {
+      jwtSend(user, 200, res);
+    } else {
       res.status(401).json({
         message: `Invalid credentials`,
       });
     }
-
-    jwtSend(user, 200, res);
   } catch (err) {
     console.log(err);
   }
@@ -54,4 +54,18 @@ const jwtSend = async (user, status, res) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+// @desc    Logout User
+// @route   POST api/v1/users/:id
+// @access  Public
+exports.userLogout = async (req, res, next) => {
+  res
+    .status(200)
+    .cookie("jwtAuth", "none", {
+      maxAge: 1000,
+    })
+    .json({
+      message: "Successfully Logged Out",
+    });
 };

@@ -14,8 +14,8 @@ const router = express.Router();
 
 router.route("/").get(getUsers).post(createUser);
 
-router.route("/:id").put(updateUser).delete(deleteUser);
-
 router.get("/:id", jwtAuth, getUser);
+
+router.route("/:id").put(jwtAuth, updateUser).delete(jwtAuth, deleteUser);
 
 module.exports = router;
