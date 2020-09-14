@@ -142,7 +142,6 @@ const deleteUser = async (req, res, next) => {
 
 // Matches User ID (req.user) with Request Parameters (params.id) to check if requesting user is loggedIn user.
 const userIdMatch = (req) => {
-  console.log(`${req.user._id}  ${req.params.id}`);
   // req.user._id.valueOf() gives the real value of mongodb ObjectId as per MongoDB Documentation.
   return req.user._id.valueOf().toString() === req.params.id;
 };

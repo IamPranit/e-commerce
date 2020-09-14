@@ -6,7 +6,7 @@ const {
   comparePasswordWithHash,
 } = require("../utils/bcryptUtils");
 
-const adminSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, "Pleaase add username"],
@@ -25,10 +25,16 @@ const adminSchema = new mongoose.Schema({
   },
 });
 
-adminSchema.pre("save", async () => {
-  // Hash Password
-  const hashedPassword = await hashPassword(this.password);
+AdminSchema.pre("save", async function () {
+  try {
+    // Hash Password
+    const hashedPassword = await hashPassword(this.password);
 
-  // Set Password
-  this.password = hashedPassword;
+    // Set Password
+    this.password = hashedPassword;
+  } catch (err) {
+    console.log(err);
+  }
 });
+
+module.exports = mongoose.model("Admin", AdminSchema);

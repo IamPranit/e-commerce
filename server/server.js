@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 // Load Routes
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin");
 
 // ExpressJS App
 const app = express();
@@ -31,6 +32,7 @@ if ((process.env.NODE_ENV = "development")) {
 // Mount Routes
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 // PORT
 const PORT = process.env.PORT || 5000;
