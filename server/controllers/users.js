@@ -14,6 +14,7 @@ const getUsers = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
+      total_users: users.length,
       data: users,
     });
   } catch (err) {
