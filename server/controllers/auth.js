@@ -23,6 +23,7 @@ exports.userLogin = async (req, res, next) => {
     }
 
     const credMatch = await user.matchPassword(password);
+    console.log(credMatch);
 
     if (credMatch) {
       jwtSend(user, 200, res);

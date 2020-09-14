@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-// BCrypt
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+// BCrypt Utils
+const {
+  hashPassword,
+  comparePasswordWithHash,
+} = require("../utils/bcryptUtils");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -38,17 +40,19 @@ const UserSchema = new mongoose.Schema({
 // Hash Password before saving it to the Database
 // By using arrow function inside of UserSchema.pre the value of "this" break hence use normal function syntax not ES6 syntax.
 UserSchema.pre("save", async function () {
-  // Hash Password with bcrypt
-  const hashedPassword = await bcrypt.hash(this.password, saltRounds);
+  // Hash Password
+  hashedPassword = await hashPassword(this.password);
 
+  // Set Password
   this.password = hashedPassword;
 });
 
-// JWT
-UserSchema.methods.matchPassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+// Match Password
+UserSchema.methods.matchPassword = async function (receivedPassword) {
+  return await comparePasswordWithHash(receivedPassword, this.password);
 }; // Match entered password with db password
 
+// JWT
 UserSchema.methods.jwtSignToken = async (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
