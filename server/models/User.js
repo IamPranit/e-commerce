@@ -52,11 +52,4 @@ UserSchema.methods.matchPassword = async function (receivedPassword) {
   return await comparePasswordWithHash(receivedPassword, this.password);
 }; // Match entered password with db password
 
-// JWT
-UserSchema.methods.jwtSignToken = async (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
-  });
-}; // Sign token and return signed token
-
 module.exports = mongoose.model("User", UserSchema);

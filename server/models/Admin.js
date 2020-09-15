@@ -25,6 +25,7 @@ const AdminSchema = new mongoose.Schema({
   },
 });
 
+// Hash Password before Saving
 AdminSchema.pre("save", async function () {
   try {
     // Hash Password
@@ -36,5 +37,10 @@ AdminSchema.pre("save", async function () {
     console.log(err);
   }
 });
+
+// Match Password
+AdminSchema.methods.matchPassword = async function (receivedPassword) {
+  return await comparePasswordWithHash(receivedPassword, this.password);
+};
 
 module.exports = mongoose.model("Admin", AdminSchema);

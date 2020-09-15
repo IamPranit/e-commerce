@@ -1,8 +1,9 @@
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+const Admin = require("../models/Admin");
+const { jwtSignToken } = require("../utils/jwtUtils");
 
 // @desc    Login User
-// @route   POST api/v1/users/:id
+// @route   POST api/v1/users/auth
 // @access  Public
 exports.userLogin = async (req, res, next) => {
   try {
@@ -14,7 +15,7 @@ exports.userLogin = async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ email: email }).select("password");
+    const user = await User.findOne({ email: email }).select("password _id");
 
     if (!user) {
       res.status(401).json({
@@ -23,7 +24,6 @@ exports.userLogin = async (req, res, next) => {
     }
 
     const credMatch = await user.matchPassword(password);
-    console.log(credMatch);
 
     if (credMatch) {
       jwtSend(user, 200, res);
@@ -37,11 +37,84 @@ exports.userLogin = async (req, res, next) => {
   }
 };
 
+// @desc    Logout User
+// @route   POST api/v1/users/auth
+// @access  Public
+exports.userLogout = async (req, res, next) => {
+  try {
+    res
+      .status(200)
+      .cookie("jwtAuth", "none", {
+        maxAge: 1000,
+      })
+      .json({
+        message: "Successfully Logged Out",
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// @desc    Login Admin
+// @route   POST /api/v1/admin/auth
+// @access  Public
+exports.adminLogin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({
+        message: "Please enter credentials",
+      });
+    }
+
+    const admin = await Admin.findOne({ username: username }).select(
+      "password _id"
+    );
+
+    if (!admin) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
+    }
+
+    const credMatch = await admin.matchPassword(password);
+
+    if (credMatch) {
+      jwtSend(admin, 200, res);
+    } else {
+      res.status(400).json({
+        message: "Invalid credentials",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// @desc Logout Admin
+// @route GET /api/v1/admin/auth
+// @access Public
+exports.adminLogout = async (req, res, next) => {
+  try {
+    res
+      .status(200)
+      .cookie("jwtAuth", "none", {
+        maxAge: 1000,
+      })
+      .json({
+        message: "Successfully Logged Out",
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // Send JWT
-const jwtSend = async (user, status, res) => {
+const jwtSend = async (currentUser, status, res) => {
   try {
     // Signed JWT / Create JWT
-    const token = await user.jwtSignToken(user._id);
+    const token = await jwtSignToken(currentUser._id);
 
     res
       .status(200)
@@ -55,18 +128,4 @@ const jwtSend = async (user, status, res) => {
   } catch (err) {
     console.log(err);
   }
-};
-
-// @desc    Logout User
-// @route   POST api/v1/users/:id
-// @access  Public
-exports.userLogout = async (req, res, next) => {
-  res
-    .status(200)
-    .cookie("jwtAuth", "none", {
-      maxAge: 1000,
-    })
-    .json({
-      message: "Successfully Logged Out",
-    });
 };
