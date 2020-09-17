@@ -3,7 +3,7 @@ const Admin = require("../models/Admin");
 const { jwtVerify } = require("../utils/jwtUtils");
 
 const jwtAuthenticate = async (req, res, next) => {
-  const token = req.cookies.jwtAuth;
+  const token = req.cookies.consumerAuth;
 
   if (!token) {
     return res.status(400).json({
@@ -23,7 +23,7 @@ const jwtAuthenticate = async (req, res, next) => {
       });
     }
 
-    req.user = user;
+    req.userConsumer = user;
 
     next();
   } catch (err) {
@@ -32,7 +32,7 @@ const jwtAuthenticate = async (req, res, next) => {
 };
 
 const adminAccess = async (req, res, next) => {
-  const token = req.cookies.jwtAuth;
+  const token = req.cookies.adminAuth;
 
   if (!token) {
     return res.status(400).json({
@@ -52,7 +52,7 @@ const adminAccess = async (req, res, next) => {
       });
     }
 
-    req.user = admin;
+    req.userAdmin = admin;
 
     next();
   } catch (err) {

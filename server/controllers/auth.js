@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const Admin = require("../models/Admin");
-const { jwtSignToken } = require("../utils/jwtUtils");
+const { jwtSend } = require("../utils/jwtUtils");
 const { comparePasswordWithHash } = require("../utils/bcryptUtils");
 
 // @desc    Login User
@@ -27,7 +27,7 @@ exports.userLogin = async (req, res, next) => {
     const credMatch = await comparePasswordWithHash(password, user.password);
 
     if (credMatch) {
-      jwtSend(user, 200, res);
+      jwtSend(user, "CONSUMER", res);
     } else {
       res.status(401).json({
         message: `Invalid credentials`,
@@ -45,7 +45,7 @@ exports.userLogout = async (req, res, next) => {
   try {
     res
       .status(200)
-      .cookie("jwtAuth", "none", {
+      .cookie("consumerAuth", "none", {
         maxAge: 1000,
       })
       .json({
@@ -82,7 +82,7 @@ exports.adminLogin = async (req, res, next) => {
     const credMatch = await comparePasswordWithHash(password, admin.password);
 
     if (credMatch) {
-      jwtSend(admin, 200, res);
+      jwtSend(admin, "ADMIN", res);
     } else {
       res.status(400).json({
         message: "Invalid credentials",
@@ -100,31 +100,11 @@ exports.adminLogout = async (req, res, next) => {
   try {
     res
       .status(200)
-      .cookie("jwtAuth", "none", {
+      .cookie("adminAuth", "none", {
         maxAge: 1000,
       })
       .json({
         message: "Successfully Logged Out",
-      });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-// Send JWT
-const jwtSend = async (currentUser, status, res) => {
-  try {
-    // Signed JWT / Create JWT
-    const token = await jwtSignToken(currentUser._id);
-
-    res
-      .status(200)
-      .cookie("jwtAuth", token, {
-        maxAge: 24 * 60 * 60 * 1000,
-      })
-      .json({
-        success: true,
-        token,
       });
   } catch (err) {
     console.log(err);
