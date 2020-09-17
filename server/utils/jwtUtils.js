@@ -7,4 +7,9 @@ const jwtSignToken = async (id) => {
   });
 };
 
-module.exports = { jwtSignToken };
+// Verify JWT
+const jwtVerify = (receivedToken) => {
+  return jwt.verify(receivedToken, process.env.JWT_SECRET);
+};
+
+module.exports = { jwtSignToken, jwtVerify };

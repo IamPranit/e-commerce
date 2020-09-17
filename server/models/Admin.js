@@ -25,7 +25,8 @@ const AdminSchema = new mongoose.Schema({
   },
 });
 
-// Hash Password before Saving
+// Hash Password before saving it to the Database
+// By using arrow function inside of AdminSchema.pre the value of "this" break hence use normal function syntax not ES6 syntax.
 AdminSchema.pre("save", async function () {
   try {
     // Hash Password
@@ -37,10 +38,5 @@ AdminSchema.pre("save", async function () {
     console.log(err);
   }
 });
-
-// Match Password
-AdminSchema.methods.matchPassword = async function (receivedPassword) {
-  return await comparePasswordWithHash(receivedPassword, this.password);
-};
 
 module.exports = mongoose.model("Admin", AdminSchema);

@@ -8,14 +8,17 @@ const {
 } = require("../controllers/users");
 
 // Authentication Middleware
-const jwtAuth = require("../middleware/auth");
+const { jwtAuthenticate, adminAccess } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.route("/").get(getUsers).post(createUser);
+router.route("/").get(adminAccess, getUsers).post(createUser);
 
-router.get("/:id", jwtAuth, getUser);
+router.get("/:id", jwtAuthenticate, getUser);
 
-router.route("/:id").put(jwtAuth, updateUser).delete(jwtAuth, deleteUser);
+router
+  .route("/:id")
+  .put(jwtAuthenticate, updateUser)
+  .delete(jwtAuthenticate, deleteUser);
 
 module.exports = router;

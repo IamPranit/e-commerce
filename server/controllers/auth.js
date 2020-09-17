@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Admin = require("../models/Admin");
 const { jwtSignToken } = require("../utils/jwtUtils");
+const { comparePasswordWithHash } = require("../utils/bcryptUtils");
 
 // @desc    Login User
 // @route   POST api/v1/users/auth
@@ -23,7 +24,7 @@ exports.userLogin = async (req, res, next) => {
       });
     }
 
-    const credMatch = await user.matchPassword(password);
+    const credMatch = await comparePasswordWithHash(password, user.password);
 
     if (credMatch) {
       jwtSend(user, 200, res);
@@ -78,7 +79,7 @@ exports.adminLogin = async (req, res, next) => {
       });
     }
 
-    const credMatch = await admin.matchPassword(password);
+    const credMatch = await comparePasswordWithHash(password, admin.password);
 
     if (credMatch) {
       jwtSend(admin, 200, res);

@@ -25,11 +25,6 @@ const UserSchema = new mongoose.Schema({
     maxlength: 150,
     required: [true, "Please add address"],
   },
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    default: "user",
-  },
   password: {
     type: String,
     minlength: 8,
@@ -46,10 +41,5 @@ UserSchema.pre("save", async function () {
   // Set Password
   this.password = hashedPassword;
 });
-
-// Match Password
-UserSchema.methods.matchPassword = async function (receivedPassword) {
-  return await comparePasswordWithHash(receivedPassword, this.password);
-}; // Match entered password with db password
 
 module.exports = mongoose.model("User", UserSchema);
