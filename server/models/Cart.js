@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const Product = require("./Product");
-const User = require("./User");
 
 const cartProductSchema = new mongoose.Schema({
   productId: {
@@ -20,8 +18,8 @@ const CartSchema = new mongoose.Schema({
     required: [true, "Please add a product in the cart"],
   },
   cartUser: {
-    type: User,
-    required: [true, "Please add the user who's using or will use this cart"],
+    type: String,
+    required: [true, "Please add the user's ID who's using this cart"],
   },
 });
 
