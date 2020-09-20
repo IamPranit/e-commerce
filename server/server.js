@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
+const productRoutes = require("./routes/products");
 
 // ExpressJS App
 const app = express();
@@ -33,6 +34,7 @@ if ((process.env.NODE_ENV = "development")) {
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/products", productRoutes);
 
 // PORT
 const PORT = process.env.PORT || 5000;
