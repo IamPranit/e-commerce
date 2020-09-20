@@ -17,8 +17,8 @@ const ProductSchema = new mongoose.Schema({
     required: [true, "Please add description for the product"],
   },
   image: {
-    type: Buffer,
-    required: [true, "Please add an image of the product"],
+    type: String,
+    required: [true, "Please add an url"],
   },
   category: {
     type: String,

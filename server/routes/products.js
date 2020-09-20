@@ -16,6 +16,6 @@ router.get("/:id", getProduct);
 // Private/Admin Routes
 router.post("/", adminAccess, createProduct);
 router.put("/:id", adminAccess, updateProduct);
-router.delete(":id", adminAccess, deleteProduct);
+router.delete("/:id", adminAccess, deleteProduct);
 
 module.exports = router;
