@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: [true, "Please add an url"],
+    required: [true, "Please add an URL"],
   },
   category: {
     type: String,
