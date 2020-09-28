@@ -25,7 +25,7 @@ const ProductSchema = new mongoose.Schema({
     required: [true, "Please specify which category the product belongs to"],
   },
   price: {
-    type: String,
+    type: Number,
     required: [true, "Please specify price of the product"],
   },
   inStock: {
