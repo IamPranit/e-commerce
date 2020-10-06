@@ -5,31 +5,40 @@ import AppBarComponent from "./components/layout/AppBarComponent";
 import Footer from "./components/layout/Footer";
 import ProductList from "./components/products/ProductList";
 import ProductDetails from "./components/products/ProductDetails";
-import { Container, makeStyles } from "@material-ui/core";
+import { Container, makeStyles, ThemeProvider } from "@material-ui/core";
+import Theme from "./components/layout/Theme";
 
 const useStyles = makeStyles({
   mainContent: {
-    minHeight: "85vh",
+    minHeight: "80vh",
+  },
+  paperRoot: {
+    backgroundColor: "#ececec",
+    color: "#6e6d6d",
   },
 });
+
+const theme = Theme;
 
 function App() {
   const classes = useStyles();
   return (
     <div className="App">
       <BrowserRouter>
-        <AppBarComponent />
-        <Container className={classes.mainContent}>
-          <Switch>
-            <Route exact path="/products">
-              <ProductList />
-            </Route>
-            <Route exact path="/products/:id">
-              <ProductDetails />
-            </Route>
-          </Switch>
-        </Container>
-        <Footer />
+        <ThemeProvider theme={theme}>
+          <AppBarComponent />
+          <Container className={classes.mainContent}>
+            <Switch>
+              <Route exact path="/products">
+                <ProductList />
+              </Route>
+              <Route exact path="/products/:id">
+                <ProductDetails />
+              </Route>
+            </Switch>
+          </Container>
+          <Footer />
+        </ThemeProvider>
       </BrowserRouter>
     </div>
   );

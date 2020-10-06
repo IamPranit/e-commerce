@@ -11,10 +11,20 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
-    width: 345,
+    width: 240,
+    backgroundColor: "#ececec",
+    color: "#6e6d6d",
   },
   media: {
     height: 140,
+  },
+  btnRight: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  card: {
+    backgroundColor: "#6e6d6d",
+    color: "#ececec",
   },
 });
 
@@ -39,18 +49,33 @@ const ProductCard = (props) => {
     history.push(`${match.url}/${productId}`);
   };
   return (
-    <Card className={classes.root} xs={12}>
+    <Card className={classes.root}>
       <CardActionArea onClick={() => handleClick(productId)}>
-        <CardMedia className={classes.media} image={image} title={name} />
+        <CardMedia
+          component="img"
+          className={classes.media}
+          image={image}
+          title={name}
+        />
         <CardContent>
           <Typography component="p">{name}</Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
+      <CardActions className={classes.btnRight}>
+        <Button
+          size="small"
+          color="primary"
+          variant="outlined"
+          disableElevation
+        >
           Add
         </Button>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          variant="outlined"
+          disableElevation
+        >
           Buy Now
         </Button>
       </CardActions>

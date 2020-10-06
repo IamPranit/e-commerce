@@ -8,13 +8,14 @@ import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    margin: "0.5rem",
   },
   paper: {
     height: 150,
   },
   control: {
     padding: theme.spacing(2),
+    margin: theme.spacing(2),
+    flexBasis: "unset",
   },
 }));
 
@@ -44,7 +45,6 @@ const ProductList = () => {
           <Grid
             item
             className={classes.control}
-            xs={12}
             md={4}
             xl={3}
             key={product._id}
