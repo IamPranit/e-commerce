@@ -45,8 +45,8 @@ const ProductCard = (props) => {
     inStock,
   } = props;
 
-  const handleClick = (e) => {
-    history.push(`${match.url}/${productId}`);
+  const handleClick = (id) => {
+    history.push(`${match.url}/${id}`);
   };
   return (
     <Card className={classes.root}>
