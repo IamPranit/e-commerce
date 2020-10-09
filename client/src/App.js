@@ -1,16 +1,20 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Container, makeStyles, ThemeProvider } from "@material-ui/core";
+import Theme from "./components/layout/Theme";
 import AppBarComponent from "./components/layout/AppBarComponent";
 import Footer from "./components/layout/Footer";
 import ProductList from "./components/products/ProductList";
 import ProductDetails from "./components/products/ProductDetails";
-import { Container, makeStyles, ThemeProvider } from "@material-ui/core";
-import Theme from "./components/layout/Theme";
+import SignUpForm from "./components/Users/SignUpForm";
+import SignInForm from "./components/Users/SignInForm";
 
 const useStyles = makeStyles({
   mainContent: {
     minHeight: "80vh",
+    display: "flex",
+    justifyContent: "center",
   },
   paperRoot: {
     backgroundColor: "#ececec",
@@ -34,6 +38,12 @@ function App() {
               </Route>
               <Route exact path="/products/:id">
                 <ProductDetails />
+              </Route>
+              <Route exact path="/auth/signup">
+                <SignUpForm />
+              </Route>
+              <Route exact path="/auth/signin">
+                <SignInForm />
               </Route>
             </Switch>
           </Container>
