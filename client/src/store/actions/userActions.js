@@ -1,9 +1,5 @@
 import {
-  GET_USERS,
-  GET_USER,
   CREATE_USER,
-  UPDATE_USER,
-  DELETE_USER,
 } from "./actionTypesUser";
 import axios from "axios";
 

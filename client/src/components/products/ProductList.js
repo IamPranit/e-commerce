@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,23 +13,21 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     height: 150,
   },
-  control: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-    flexBasis: "unset",
-  },
 }));
 
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  const history = useHistory();
 
-  const [spacing, setSpacing] = React.useState(2);
+  useEffect(() => {
+    isLoggedIn ? dispatch(getProducts()) : history.push("/auth/signin");
+  }, [dispatch, history, isLoggedIn]);
+
   const classes = useStyles();
 
   return (
@@ -42,13 +41,7 @@ const ProductList = () => {
     >
       {products.length &&
         products.map((product) => (
-          <Grid
-            item
-            className={classes.control}
-            md={4}
-            xl={3}
-            key={product._id}
-          >
+          <Grid item key={product._id}>
             <ProductCard
               className="product-card"
               productId={product._id}
