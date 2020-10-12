@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Container, makeStyles, ThemeProvider } from "@material-ui/core";
 import Theme from "./components/layout/Theme";
 import AppBarComponent from "./components/layout/AppBarComponent";
@@ -11,15 +11,13 @@ import SignUpForm from "./components/Users/SignUpForm";
 import SignInForm from "./components/Users/SignInForm";
 
 const useStyles = makeStyles({
-  mainContent: {
-    minHeight: "80vh",
-    display: "flex",
-    justifyContent: "center",
-  },
   paperRoot: {
     backgroundColor: "#ececec",
     color: "#6e6d6d",
   },
+  mainContent: {
+    padding: 24,
+  }
 });
 
 const theme = Theme;

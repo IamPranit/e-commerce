@@ -7,6 +7,9 @@ import {
   makeStyles,
   Card,
 } from "@material-ui/core";
+import { userLogin } from "../../store/actions/authActions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,12 +39,29 @@ const SignInForm = () => {
     }));
   };
 
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(userLogin(state));
+
+    setState({
+      email: "",
+      password: "",
+    });
+
+    history.push("/products");
+  };
+
   const { email, password } = state;
 
   return (
     <Container className={classes.root} style={{ alignItems: "center" }}>
       <Card className={classes.card}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Container className={classes.root}>
             <FormControl>
               <TextField

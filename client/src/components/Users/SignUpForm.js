@@ -51,7 +51,6 @@ const SignUpForm = () => {
     e.preventDefault();
 
     if (password === verifyPassword) {
-      console.log(password);
       dispatch(createUser(state));
       setState({
         name: "",
@@ -172,18 +171,18 @@ const SignUpForm = () => {
       </Card>
       {snackBar === "success" ? (
         <SnackBarComponent
-          open="true"
+          open={true}
           message="User added successfully!"
           severity="success"
         />
       ) : snackBar === "error" ? (
         <SnackBarComponent
-          open="true"
+          open={true}
           message="Passwords do not match!"
           severity="error"
         />
       ) : (
-        <SnackBarComponent open="false" message="User haven't entered anything" severity="info" />
+        <></>
       )}
     </Container>
   );

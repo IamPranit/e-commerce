@@ -12,6 +12,7 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 const useStyles = makeStyles({
   root: {
     width: 240,
+    margin: 0,
     backgroundColor: "#ececec",
     color: "#6e6d6d",
   },
@@ -37,12 +38,6 @@ const ProductCard = (props) => {
     name,
     image,
     productId,
-    maker,
-    price,
-    rating,
-    category,
-    description,
-    inStock,
   } = props;
 
   const handleClick = (id) => {

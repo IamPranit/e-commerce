@@ -1,10 +1,4 @@
-import {
-  GET_PRODUCTS,
-  GET_PRODUCT,
-  ADD_PRODUCT,
-  UPDATE_PRODUCT,
-  DELETE_PRODUCT,
-} from "./actionTypesProduct";
+import { GET_PRODUCTS, GET_PRODUCT } from "./actionTypesProduct";
 import axios from "axios";
 
 export const getProducts = () => async (dispatch) => {
