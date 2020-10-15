@@ -23,7 +23,10 @@ connectDB();
 
 // Middlewares
 app.use(express.json()); // Body Parser
-app.use(cors()); // CORS
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+})); // CORS
 app.use(cookieParser()); // Cookie Parser
 
 // Development mode logging
