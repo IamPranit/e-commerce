@@ -23,10 +23,12 @@ connectDB();
 
 // Middlewares
 app.use(express.json()); // Body Parser
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true,
-})); // CORS
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+); // CORS
 app.use(cookieParser()); // Cookie Parser
 
 // Development mode logging
@@ -39,7 +41,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/products", productRoutes);
-app.use("/api/v1/carts", cartRoutes);
+app.use("/api/v1/cart", cartRoutes);
 
 // PORT
 const PORT = process.env.PORT || 5000;

@@ -57,6 +57,10 @@ const updateCart = async (req, res, next) => {
   try {
     const updatedCart = req.body;
 
+    const totalPrice = itemsTotalPrice(updatedCart.cartItems);
+
+    updatedCart.totalCartPrice = totalPrice;
+
     const cart = await Cart.findByIdAndUpdate(req.params.id, updatedCart, {
       new: true,
       runValidators: true,
@@ -85,6 +89,14 @@ const deleteCart = async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+const itemsTotalPrice = (itemsArr) => {
+  let totalPrice = 0;
+  for (const item of itemsArr) {
+    totalPrice += item.lineItemPrice * item.quantity;
+  }
+  return totalPrice;
 };
 
 module.exports = { getCarts, getCart, createCart, updateCart, deleteCart };

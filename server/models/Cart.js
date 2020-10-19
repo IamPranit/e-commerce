@@ -1,57 +1,51 @@
 const mongoose = require("mongoose");
-const Product = require("./Product");
 const User = require("./User");
 
-const LineItemSchema = new mongoose.Schema({
-  lineItem: {
-    type: mongoose.Schema.ObjectId,
-    ref: Product,
-  },
-  quantity: {
-    type: Number,
-  },
-});
-
 const CartSchema = new mongoose.Schema({
-  customer: {
+  customerId: {
     type: mongoose.Schema.ObjectId,
     ref: User,
   },
-  cartItems: [LineItemSchema],
-  totalCartPrice: {
-    type: Number,
-    required: [true, "Total price of all the items in the cart is required"],
-  },
+  cartItems: [
+    {
+      lineItemId: {
+        type: String,
+        required: true,
+      },
+      lineItemPrice: {
+        type: Number,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+        min: 1,
+      },
+    },
+  ],
+  totalCartPrice: Number,
   cartState: {
     type: String,
     enum: ["Active", "Merged", "Ordered"],
     default: "Active",
   },
-  paymentMethod: {
-    type: String,
-    enum: ["UPI", "COD", "Credit/Debit Card"],
-    default: "COD",
-  },
 });
 
-// LineItemSchema.pre("save", function () {
-//   const singleProductPrice = this.lineItemPrice;
-//   this.lineItemPrice = singleProductPrice * this.lineItemQuantity;
-// });
+const totalLineItemPrice = (lineItemPrice, lineItemQuantity) => {
+  return lineItemPrice * lineItemQuantity;
+};
 
-// CartSchema.pre("save", function () {
-//   this.totalCartPrice = this.lineItemPrice;
-// });
+CartSchema.pre("save", function () {
+  let totalPrice = 0;
+  for (const lineItem of this.cartItems) {
+    totalPrice += totalLineItemPrice(lineItem.lineItemPrice, lineItem.quantity);
+  }
+
+  this.totalCartPrice = totalPrice;
+});
 
 CartSchema.pre("findOne", function () {
-  this.populate("customer", "name email address");
-  this.populate({
-    path: "cartItems",
-    populate: {
-      path: "lineItem",
-      select: "name maker price",
-    },
-  });
+  this.populate("customerId", "name email address");
 });
 
 module.exports = mongoose.model("Cart", CartSchema);
