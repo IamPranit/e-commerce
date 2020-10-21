@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Container, Typography, makeStyles } from "@material-ui/core";
 import Rating from "../layout/Rating";
 import CartButton from "../layout/CartButton";
+import { getCart } from "../../store/actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,11 +26,14 @@ const useStyles = makeStyles((theme) => ({
 const Product = () => {
   const product = useSelector((state) => state.product.products);
 
+  const cart = useSelector((state) => state.cart.cartItems);
+
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
   useEffect(() => {
+    dispatch(getCart());
     dispatch(getProduct(id));
   }, [dispatch, id]);
 
@@ -73,13 +77,7 @@ const Product = () => {
               <Typography variant="h5">Price: {price}</Typography>
             </Container>
 
-            <Container className={classes.root}>
-              {inStock ? (
-                <CartButton text="Add" />
-              ) : (
-                <CartButton disabled="disabled" text="OUT OF STOCK" />
-              )}
-            </Container>
+            {inStock && <CartButton text="Add" product={product} cart={cart} />}
           </Container>
         </Container>
       </Container>

@@ -9,6 +9,7 @@ import ProductList from "./components/products/ProductList";
 import ProductDetails from "./components/products/ProductDetails";
 import SignUpForm from "./components/Users/SignUpForm";
 import SignInForm from "./components/Users/SignInForm";
+import Cart from "./components/Cart/Cart";
 
 const useStyles = makeStyles({
   paperRoot: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
   },
   mainContent: {
     padding: 24,
-  }
+  },
 });
 
 const theme = Theme;
@@ -42,6 +43,9 @@ function App() {
               </Route>
               <Route exact path="/auth/signin">
                 <SignInForm />
+              </Route>
+              <Route exact path="/cart">
+                <Cart />
               </Route>
             </Switch>
           </Container>

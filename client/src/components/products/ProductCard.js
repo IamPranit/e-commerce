@@ -34,11 +34,7 @@ const ProductCard = (props) => {
   const history = useHistory();
   const match = useRouteMatch();
 
-  const {
-    name,
-    image,
-    productId,
-  } = props;
+  const { name, image, productId } = props;
 
   const handleClick = (id) => {
     history.push(`${match.url}/${id}`);

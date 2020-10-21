@@ -12,9 +12,6 @@ export const userLogin = (userData) => async (dispatch) => {
         password,
       },
       {
-        headers: {
-          "Content-Type": "application/json",
-        },
         withCredentials: true,
       }
     );

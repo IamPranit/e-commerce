@@ -1,6 +1,4 @@
-import {
-  CREATE_USER,
-} from "./actionTypesUser";
+import { CREATE_USER } from "./actionTypesUser";
 import axios from "axios";
 
 export const createUser = (userData) => async (dispatch) => {
@@ -15,7 +13,6 @@ export const createUser = (userData) => async (dispatch) => {
     });
 
     const payloadData = user.data.data;
-    console.log(`payloadData= ${payloadData}`);
 
     dispatch({
       type: CREATE_USER,

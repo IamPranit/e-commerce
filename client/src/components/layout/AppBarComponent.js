@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: "flex",
     flexGrow: 1,
-    cursor: "pointer"
+    cursor: "pointer",
   },
 }));
 
@@ -32,9 +33,17 @@ const AppBarComponent = () => {
   return (
     <AppBar position="static" color="transparent">
       <Toolbar>
-        <Typography variant="h6" className={classes.title} onClick={() => handleClick("/products")}>
+        <Typography
+          variant="h6"
+          className={classes.title}
+          onClick={() => handleClick("/products")}
+        >
           E Commerce
         </Typography>
+        <ShoppingCartRoundedIcon
+          color="inherit"
+          onClick={() => handleClick("/cart")}
+        />
         <Button color="inherit" onClick={() => handleClick("/auth/signup")}>
           Sign Up
         </Button>
