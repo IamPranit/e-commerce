@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import { AppBar, Toolbar, Container, IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
@@ -20,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     cursor: "pointer",
   },
+  toolbar: {
+    textAlignLast: "end",
+  },
 }));
 
 const AppBarComponent = () => {
@@ -32,7 +34,7 @@ const AppBarComponent = () => {
 
   return (
     <AppBar position="static" color="transparent">
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
         <Typography
           variant="h6"
           className={classes.title}
@@ -40,16 +42,17 @@ const AppBarComponent = () => {
         >
           E Commerce
         </Typography>
-        <ShoppingCartRoundedIcon
-          color="inherit"
-          onClick={() => handleClick("/cart")}
-        />
-        <Button color="inherit" onClick={() => handleClick("/auth/signup")}>
-          Sign Up
-        </Button>
-        <Button color="inherit" onClick={() => handleClick("/auth/signin")}>
-          Login
-        </Button>
+        <Container>
+          <IconButton onClick={() => handleClick("/cart")}>
+            <ShoppingCartRoundedIcon color="secondary" />
+          </IconButton>
+          <Button color="inherit" onClick={() => handleClick("/auth/signup")}>
+            Sign Up
+          </Button>
+          <Button color="inherit" onClick={() => handleClick("/auth/signin")}>
+            Login
+          </Button>
+        </Container>
       </Toolbar>
     </AppBar>
   );

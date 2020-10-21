@@ -4,6 +4,12 @@ import Typography from "@material-ui/core/Typography";
 import { CardContent, Container, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { AddCircle, RemoveCircle } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  getCart,
+  removeFromCart,
+} from "../../store/actions/cartActions";
 
 const useStyles = makeStyles({
   cardGrid: {
@@ -17,10 +23,23 @@ const useStyles = makeStyles({
   },
 });
 
-const CartItem = ({ cartItem, cartPrice }) => {
+const CartItem = ({ cartItem }) => {
   const classes = useStyles();
 
   const { lineItemId, lineItemPrice, quantity } = cartItem;
+
+  const cart = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
+
+  const handleAdd = async () => {
+    await dispatch(addToCart(cart, lineItemId));
+    await dispatch(getCart());
+  };
+
+  const handleRemove = async () => {
+    await dispatch(removeFromCart(cart, lineItemId));
+    await dispatch(getCart());
+  };
 
   return (
     <Card>
@@ -31,11 +50,21 @@ const CartItem = ({ cartItem, cartPrice }) => {
         <Container className={classes.cardGrid}>
           <Typography>Image</Typography>
           <Typography>
-            <IconButton aria-label="remove" color="secondary">
+            <IconButton
+              aria-label="remove"
+              name="removeFromCart"
+              color="secondary"
+              onClick={handleRemove}
+            >
               <RemoveCircle />
             </IconButton>
             {quantity}
-            <IconButton aria-label="add" color="primary">
+            <IconButton
+              aria-label="add"
+              name="addToCart"
+              color="primary"
+              onClick={handleAdd}
+            >
               <AddCircle />
             </IconButton>
           </Typography>

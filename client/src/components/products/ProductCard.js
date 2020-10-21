@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../../store/actions/cartActions";
 
 const useStyles = makeStyles({
   root: {
@@ -34,11 +36,20 @@ const ProductCard = (props) => {
   const history = useHistory();
   const match = useRouteMatch();
 
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart.cartItems);
+
   const { name, image, productId } = props;
 
   const handleClick = (id) => {
     history.push(`${match.url}/${id}`);
   };
+
+  const handleAdd = () => {
+    dispatch(addToCart(cart, productId));
+  };
+
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={() => handleClick(productId)}>
@@ -57,6 +68,7 @@ const ProductCard = (props) => {
           size="small"
           color="primary"
           variant="outlined"
+          onClick={handleAdd}
           disableElevation
         >
           Add

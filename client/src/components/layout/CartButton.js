@@ -16,12 +16,6 @@ const CartButton = ({ text, product, cart }) => {
 
   const dispatch = useDispatch();
 
-  const productObj = {
-    lineItemId: product._id,
-    lineItemPrice: product.price,
-    quantity: 1,
-  };
-
   const handleClick = (e) => {
     dispatch(addToCart(cart, product._id));
   };

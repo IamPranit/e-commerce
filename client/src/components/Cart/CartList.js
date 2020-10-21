@@ -12,7 +12,7 @@ const CartList = ({ cartItems, cartPrice }) => {
       </Container>
       {cartItems.map((item) => (
         <Container key={item._id} style={{ padding: "0.2em" }}>
-          <CartItem cartItem={item} cartPrice={cartPrice} />
+          <CartItem cartItem={item} />
         </Container>
       ))}
     </div>
