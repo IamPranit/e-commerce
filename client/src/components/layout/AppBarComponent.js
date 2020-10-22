@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Container, IconButton } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
@@ -42,17 +42,16 @@ const AppBarComponent = () => {
         >
           E Commerce
         </Typography>
-        <Container>
-          <IconButton onClick={() => handleClick("/cart")}>
-            <ShoppingCartRoundedIcon color="secondary" />
-          </IconButton>
-          <Button color="inherit" onClick={() => handleClick("/auth/signup")}>
-            Sign Up
-          </Button>
-          <Button color="inherit" onClick={() => handleClick("/auth/signin")}>
-            Login
-          </Button>
-        </Container>
+
+        <IconButton onClick={() => handleClick("/cart")}>
+          <ShoppingCartRoundedIcon color="secondary" />
+        </IconButton>
+        <Button color="inherit" onClick={() => handleClick("/auth/signup")}>
+          Sign Up
+        </Button>
+        <Button color="inherit" onClick={() => handleClick("/auth/signin")}>
+          Login
+        </Button>
       </Toolbar>
     </AppBar>
   );
