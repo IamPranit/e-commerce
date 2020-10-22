@@ -2,6 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { Container, makeStyles } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/actions/cartActions";
 
 const useStyles = makeStyles({
   root: {
@@ -9,8 +11,15 @@ const useStyles = makeStyles({
   },
 });
 
-const CartButton = ({ disabled, text }) => {
+const CartButton = ({ text, product, cart }) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    dispatch(addToCart(cart, product._id));
+  };
+
   return (
     <Container className={classes.root}>
       <Button
@@ -19,7 +28,7 @@ const CartButton = ({ disabled, text }) => {
         color="primary"
         aria-label="add to shopping cart"
         size="large"
-        disabled={disabled ? true : false}
+        onClick={handleClick}
       >
         {text}
       </Button>

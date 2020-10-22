@@ -25,7 +25,8 @@ const ProductList = () => {
   const history = useHistory();
 
   useEffect(() => {
-    isLoggedIn ? dispatch(getProducts()) : history.push("/auth/signin");
+    dispatch(getProducts());
+    // isLoggedIn ? dispatch(getProducts()) : history.push("/auth/signin");
   }, [dispatch, history, isLoggedIn]);
 
   const classes = useStyles();

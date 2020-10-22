@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   card: {
-    width: "400px",
+    width: "100%",
   },
 }));
 
@@ -43,15 +43,10 @@ const SignInForm = () => {
 
   const history = useHistory();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(userLogin(state));
-
-    setState({
-      email: "",
-      password: "",
-    });
+    await dispatch(userLogin(state));
 
     history.push("/products");
   };
