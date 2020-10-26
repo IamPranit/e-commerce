@@ -1,0 +1,1 @@
+export const ORDER_CHECKOUT = "ORDER_CHECKOUT";

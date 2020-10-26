@@ -18,7 +18,7 @@ const CartList = ({ cartItems, cartPrice }) => {
         </Typography>
 
         <Button
-          variant="contained"
+          variant="outlined"
           color="secondary"
           onClick={handleCheckout}
           disableElevation
