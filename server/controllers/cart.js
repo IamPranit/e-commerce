@@ -1,7 +1,7 @@
 const Cart = require("../models/Cart");
 
 // @desc    Get All Carts
-// @route   GET /api/v1/carts
+// @route   GET /api/v1/cart
 // @access  Private
 const getCarts = async (req, res, next) => {
   try {
@@ -16,8 +16,8 @@ const getCarts = async (req, res, next) => {
   }
 };
 
-// @desc    Get Single Carts
-// @route   GET /api/v1/carts/:id
+// @desc    Get Single Cart
+// @route   GET /api/v1/cart/:id
 // @access  Private
 const getCart = async (req, res, next) => {
   try {
@@ -33,11 +33,13 @@ const getCart = async (req, res, next) => {
 };
 
 // @desc Create Cart
-// @route /api/v1/carts
+// @route /api/v1/cart
 // @access Private
 const createCart = async (req, res, next) => {
   try {
     const newCart = req.body;
+
+    mergeUser(req);
 
     const cart = await Cart.create(newCart);
 
@@ -51,7 +53,7 @@ const createCart = async (req, res, next) => {
 };
 
 // @desc Update Cart
-// @route /api/v1/carts/:id
+// @route /api/v1/cart/:id
 // @access Private
 const updateCart = async (req, res, next) => {
   try {
@@ -76,7 +78,7 @@ const updateCart = async (req, res, next) => {
 };
 
 // @desc Delete Cart
-// @route /api/v1/carts/:id
+// @route /api/v1/cart/:id
 // @access Private
 const deleteCart = async (req, res, next) => {
   try {
@@ -91,6 +93,27 @@ const deleteCart = async (req, res, next) => {
   }
 };
 
+// @desc  Find Cart
+// @route /api/v1/cart/:cartId
+// @access Private
+const findCart = async (req, res, next) => {
+  try {
+    const cart = await Cart.findOne({
+      customerId: req.userConsumer._id,
+    }).exec();
+
+    res.status(200).json({
+      success: true,
+      data: cart,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Utility Functions
+
+// Calculate total cart
 const itemsTotalPrice = (itemsArr) => {
   let totalPrice = 0;
   for (const item of itemsArr) {
@@ -99,4 +122,23 @@ const itemsTotalPrice = (itemsArr) => {
   return totalPrice;
 };
 
-module.exports = { getCarts, getCart, createCart, updateCart, deleteCart };
+// Merge Cart with Customer ID
+const mergeUser = (req) => {
+  const loggedInUser = req.userConsumer;
+
+  if (loggedInUser) {
+    req.body.customerId = loggedInUser._id;
+    return req.body;
+  } else {
+    return req.body;
+  }
+};
+
+module.exports = {
+  getCarts,
+  getCart,
+  findCart,
+  createCart,
+  updateCart,
+  deleteCart,
+};
