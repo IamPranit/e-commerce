@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Cart = require("../models/Cart");
+const Order = require("../models/Order");
 
 const validateCart = async (req, res, next) => {
   try {
@@ -21,4 +22,24 @@ const validateCart = async (req, res, next) => {
   }
 };
 
-module.exports = { validateCart };
+const validateOrder = async (req, res, next) => {
+  try {
+    const foundOrder = await Order.findOne({ customer: req.userConsumer._id });
+
+    if (foundOrder) {
+      const orderIdStr = foundOrder._id.toString();
+      if (orderIdStr === req.params.id) {
+        next();
+      }
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { validateCart, validateOrder };

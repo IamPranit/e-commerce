@@ -120,3 +120,18 @@ exports.deleteOrder = async (req, res, next) => {
     console.log(err);
   }
 };
+
+// @desc Get User's Order
+// @route GET /api/v1/order/search
+// @access User/Admin
+exports.getUserOrder = async (req, res, next) => {
+  try {
+    const order = await await Order.findOne({ customer: req.userConsumer._id });
+    res.status(200).json({
+      success: true,
+      data: order,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

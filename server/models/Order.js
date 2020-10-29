@@ -29,4 +29,9 @@ const OrderSchema = new mongoose.Schema({
   },
 });
 
+OrderSchema.pre("findOne", async function () {
+  this.populate("customer", "name email address");
+  this.populate("cart", "cartItems totalCartPrice cartState");
+});
+
 module.exports = mongoose.model("Order", OrderSchema);
