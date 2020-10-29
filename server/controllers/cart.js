@@ -82,7 +82,19 @@ const updateCart = async (req, res, next) => {
 // @access Private
 const deleteCart = async (req, res, next) => {
   try {
-    await Cart.findOneAndDelete(req.params.id);
+    const foundCart = await Cart.findOne({ customerId: req.userConsumer._id });
+
+    if (foundCart) {
+      const cartIdStr = foundCart._id.toString();
+      if (cartIdStr === req.params.id) {
+        await Cart.findOneAndDelete({ customerId: req.userConsumer._id });
+      }
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: `Cart not found!`,
+      });
+    }
 
     res.status(200).json({
       success: true,
@@ -128,6 +140,7 @@ const mergeUser = (req) => {
 
   if (loggedInUser) {
     req.body.customerId = loggedInUser._id;
+    req.body.cartState = "Merged";
     return req.body;
   } else {
     return req.body;
