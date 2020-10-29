@@ -10,7 +10,7 @@ import ProductDetails from "./components/products/ProductDetails";
 import SignUpForm from "./components/Users/SignUpForm";
 import SignInForm from "./components/Users/SignInForm";
 import Cart from "./components/Cart/Cart";
-import OrderSummary from "./components/Checkout/OrderSummary";
+import OrderSummary from "./components/Order/OrderSummary";
 
 const useStyles = makeStyles({
   paperRoot: {

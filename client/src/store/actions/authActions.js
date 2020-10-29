@@ -20,9 +20,11 @@ export const userLogin = (userData) => async (dispatch) => {
 
     localStorage.setItem("loggedIn", auth);
 
+    const payloadData = localStorage.getItem("loggedIn");
+
     dispatch({
       type: USER_LOGIN,
-      payload: auth,
+      payload: payloadData,
     });
   } catch (err) {
     console.log(err);
@@ -31,15 +33,17 @@ export const userLogin = (userData) => async (dispatch) => {
 
 export const userLogout = () => async (dispatch) => {
   try {
-    const user = await axios.get("http://localhost:8000/api/v1/auth/logout", {
+    await axios.get("http://localhost:8000/api/v1/auth/logout", {
       withCredentials: true,
     });
 
     localStorage.removeItem("loggedIn");
 
+    const payloadData = localStorage.getItem("loggedIn");
+
     dispatch({
       type: USER_LOGOUT,
-      payload: user,
+      payload: payloadData,
     });
   } catch (err) {
     console.log(err);

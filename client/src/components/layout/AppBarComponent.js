@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../store/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +34,8 @@ const AppBarComponent = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const handleClick = (route) => {
     history.push(`${route}`);
   };
@@ -42,8 +44,6 @@ const AppBarComponent = () => {
     await dispatch(userLogout());
     history.push(`${route}`);
   };
-
-  const loggedIn = localStorage.getItem("loggedIn");
 
   return (
     <AppBar position="static" color="transparent">
@@ -59,7 +59,7 @@ const AppBarComponent = () => {
         <IconButton onClick={() => handleClick("/cart")}>
           <ShoppingCartRoundedIcon color="secondary" />
         </IconButton>
-        {loggedIn ? (
+        {isLoggedIn ? (
           <Button color="inherit" onClick={() => handleLogout("/products")}>
             Sign Out
           </Button>
@@ -69,7 +69,7 @@ const AppBarComponent = () => {
               Sign Up
             </Button>
             <Button color="inherit" onClick={() => handleClick("/auth/signin")}>
-              Login
+              Sign In
             </Button>
           </Container>
         )}
