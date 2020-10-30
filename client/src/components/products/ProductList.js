@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const loggedIn = localStorage.getItem("loggedIn");
 
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const ProductList = () => {
   useEffect(() => {
     dispatch(getProducts());
     // isLoggedIn ? dispatch(getProducts()) : history.push("/auth/signin");
-  }, [dispatch, history, isLoggedIn]);
+  }, [dispatch, history, loggedIn]);
 
   const classes = useStyles();
 

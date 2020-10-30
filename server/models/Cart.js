@@ -3,7 +3,7 @@ const User = require("./User");
 
 const CartSchema = new mongoose.Schema({
   customerId: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: User,
   },
   cartItems: [

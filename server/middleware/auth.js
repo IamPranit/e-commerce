@@ -18,7 +18,7 @@ const jwtAuthenticate = async (req, res, next) => {
     const user = await User.findById(jwtDecoded.id);
 
     if (!user) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "User not authorized!",
       });
     }

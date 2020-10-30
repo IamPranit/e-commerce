@@ -80,8 +80,6 @@ const updateUser = async (req, res, next) => {
       });
     }
 
-    console.log(req.user);
-
     if (!userIdMatch(req)) {
       return res.status(400).json({
         message: `Bad request`,
@@ -140,10 +138,33 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+// @desc Get user with cookie
+// @route GET /api/v1/users/search
+// @access Private
+const getUserWithCookie = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ _id: req.userConsumer._id });
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // Matches User ID (req.user) with Request Parameters (params.id) to check if requesting user is loggedIn user.
 const userIdMatch = (req) => {
   // req.user._id.valueOf() gives the real value of mongodb ObjectId as per MongoDB Documentation.
   return req.userConsumer._id.valueOf().toString() === req.params.id;
 };
 
-module.exports = { getUsers, getUser, createUser, updateUser, deleteUser };
+module.exports = {
+  getUsers,
+  getUser,
+  getUserWithCookie,
+  createUser,
+  updateUser,
+  deleteUser,
+};
