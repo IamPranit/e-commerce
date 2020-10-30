@@ -1,6 +1,8 @@
 import { GET_PRODUCTS, GET_PRODUCT } from "./actionTypesProduct";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 export const getProducts = () => async (dispatch) => {
   try {
     const products = await axios.get("http://localhost:8000/api/v1/products");

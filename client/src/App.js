@@ -10,6 +10,9 @@ import ProductDetails from "./components/products/ProductDetails";
 import SignUpForm from "./components/Users/SignUpForm";
 import SignInForm from "./components/Users/SignInForm";
 import Cart from "./components/Cart/Cart";
+import OrderSummary from "./components/Order/OrderSummary";
+import OrderSuccess from "./components/Order/OrderSuccess";
+import OrderScreen from "./components/Order/OrderScreen";
 
 const useStyles = makeStyles({
   paperRoot: {
@@ -46,6 +49,15 @@ function App() {
               </Route>
               <Route exact path="/cart">
                 <Cart />
+              </Route>
+              <Route exact path="/checkout">
+                <OrderSummary />
+              </Route>
+              <Route exact path="/orders">
+                <OrderSuccess />
+              </Route>
+              <Route exact path="/myorders">
+                <OrderScreen />
               </Route>
             </Switch>
           </Container>
