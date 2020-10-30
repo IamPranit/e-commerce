@@ -1,6 +1,8 @@
 import { USER_LOGIN, USER_LOGOUT } from "./actionTypesAuth";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 export const userLogin = (userData) => async (dispatch) => {
   try {
     const { email, password } = userData;
@@ -43,6 +45,23 @@ export const userLogout = () => async (dispatch) => {
 
     dispatch({
       type: USER_LOGOUT,
+      payload: payloadData,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getUser = () => async (dispatch) => {
+  try {
+    const user = await axios.get("http://localhost:8000/api/v1/users/search", {
+      withCredentials: true,
+    });
+
+    const payloadData = user.data.success;
+
+    dispatch({
+      type: USER_LOGIN,
       payload: payloadData,
     });
   } catch (err) {

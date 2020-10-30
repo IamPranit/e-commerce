@@ -1,7 +1,9 @@
 import { ORDER_CHECKOUT } from "../actions/actionTypesCheckout";
 
 const initialState = {
-  orderStatus: "",
+  orderId: "",
+  shippingAddress: "",
+  customer: "",
 };
 
 export const checkoutReducer = (state = initialState, action) => {
@@ -9,7 +11,9 @@ export const checkoutReducer = (state = initialState, action) => {
     case ORDER_CHECKOUT:
       return {
         ...state,
-        orderStatus: action.payload,
+        orderId: action.payload._id,
+        shippingAddress: action.payload.shippingAddress,
+        customer: action.payload.customer,
       };
 
     default:

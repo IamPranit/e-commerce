@@ -5,6 +5,8 @@ import {
   REMOVE_FROM_CART,
 } from "../actions/actionTypesCart";
 
+axios.defaults.withCredentials = true;
+
 export const getCart = () => async (dispatch) => {
   try {
     const cart = await axios.get("http://localhost:8000/api/v1/cart/search", {

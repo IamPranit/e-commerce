@@ -1,6 +1,8 @@
 import { CREATE_USER } from "./actionTypesUser";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 export const createUser = (userData) => async (dispatch) => {
   try {
     const { name, email, address, password } = userData;

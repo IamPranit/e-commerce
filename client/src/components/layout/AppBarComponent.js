@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, IconButton, Container } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../store/actions/authActions";
+import { userLogout, getUser } from "../../store/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +33,10 @@ const AppBarComponent = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 

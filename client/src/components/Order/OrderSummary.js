@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "../../store/actions/cartActions";
 import { orderCheckout } from "../../store/actions/checkoutActions";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   listItemText: {
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const OrderSummary = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getCart());
@@ -48,10 +50,11 @@ const OrderSummary = () => {
 
   const cart = useSelector((state) => state.cart);
 
-  const { cartItems, totalCartPrice, cartState } = cart;
+  const { cartItems, totalCartPrice } = cart;
 
-  const handleCheckout = async () => {
-    await dispatch(orderCheckout(cartItems, cartState));
+  const handleCheckout = async (e) => {
+    dispatch(orderCheckout());
+    history.push("/orders");
   };
 
   return (
@@ -82,7 +85,7 @@ const OrderSummary = () => {
       </List>
       <Card className={classes.card}>
         <Typography variant="h6" color="textSecondary">
-          <CardContent>Total: {totalCartPrice}</CardContent>
+          <CardContent>Total: {totalCartPrice.toFixed(2)}</CardContent>
           <Button
             color="primary"
             onClick={handleCheckout}

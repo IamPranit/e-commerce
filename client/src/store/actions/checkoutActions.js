@@ -1,21 +1,43 @@
 import { ORDER_CHECKOUT } from "./actionTypesCheckout";
 import axios from "axios";
 
-export const orderCheckout = (cartItems, cartState) => async (dispatch) => {
+axios.defaults.withCredentials = true;
+
+export const orderCheckout = () => async (dispatch) => {
   try {
     const cartObj = {
-      cartItems,
-      cartState: "Merged",
+      shipmentState: "Ready",
+      paymentState: "Paid",
     };
-    const order = await axios.put(
-      `http://localhost:8000/api/v1/cart/5f8c07766690e338a84e7de2`,
+
+    const order = await axios.post(
+      "http://localhost:8000/api/v1/order",
       cartObj,
       {
         withCredentials: true,
       }
     );
 
-    const payloadData = order.data.data.cartState;
+    const payloadData = order.data.data;
+
+    dispatch({
+      type: ORDER_CHECKOUT,
+      payload: payloadData,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getOrder = () => async (dispatch) => {
+  try {
+    const order = await axios.get(`http://localhost:8000/api/v1/order/search`, {
+      headers: {
+        withCredentials: true,
+      },
+    });
+
+    const payloadData = order.data.data;
 
     dispatch({
       type: ORDER_CHECKOUT,
