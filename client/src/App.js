@@ -9,6 +9,7 @@ import ProductList from "./components/products/ProductList";
 import ProductDetails from "./components/products/ProductDetails";
 import SignUpForm from "./components/Users/SignUpForm";
 import SignInForm from "./components/Users/SignInForm";
+import ProfilePage from "./components/Users/ProfilePage";
 import Cart from "./components/Cart/Cart";
 import OrderSummary from "./components/Order/OrderSummary";
 import OrderSuccess from "./components/Order/OrderSuccess";
@@ -46,6 +47,9 @@ function App() {
               </Route>
               <Route exact path="/auth/signin">
                 <SignInForm />
+              </Route>
+              <Route exact path="/myprofile">
+                <ProfilePage />
               </Route>
               <Route exact path="/cart">
                 <Cart />

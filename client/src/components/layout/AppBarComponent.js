@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, IconButton, Container } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Container,
+  Typography,
+  Button,
+} from "@material-ui/core";
+import { ShoppingCartRounded, AccountCircleRounded } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout, getUser } from "../../store/actions/authActions";
@@ -61,12 +66,17 @@ const AppBarComponent = () => {
         </Typography>
 
         <IconButton onClick={() => handleClick("/cart")}>
-          <ShoppingCartRoundedIcon color="secondary" />
+          <ShoppingCartRounded color="secondary" />
         </IconButton>
         {isLoggedIn ? (
-          <Button color="inherit" onClick={() => handleLogout("/products")}>
-            Sign Out
-          </Button>
+          <Container className={classes.containerWidthAuto}>
+            <Button color="inherit" onClick={() => handleLogout("/products")}>
+              Sign Out
+            </Button>
+            <IconButton onClick={() => handleClick("/myprofile")}>
+              <AccountCircleRounded />
+            </IconButton>
+          </Container>
         ) : (
           <Container className={classes.containerWidthAuto}>
             <Button color="inherit" onClick={() => handleClick("/auth/signup")}>
