@@ -1,11 +1,12 @@
 import { GET_PRODUCTS, GET_PRODUCT } from "./actionTypesProduct";
 import axios from "axios";
+import { SERVER_URL } from "../../constants/Constants";
 
 axios.defaults.withCredentials = true;
 
 export const getProducts = () => async (dispatch) => {
   try {
-    const products = await axios.get("http://localhost:8000/api/v1/products");
+    const products = await axios.get(`${SERVER_URL}/api/v1/products`);
 
     const payloadData = products.data.data;
 
@@ -21,7 +22,7 @@ export const getProducts = () => async (dispatch) => {
 export const getProduct = (productId) => async (dispatch) => {
   try {
     const product = await axios.get(
-      `http://localhost:8000/api/v1/products/${productId}`
+      `${SERVER_URL}/api/v1/products/${productId}`
     );
 
     const payloadData = product.data.data;
