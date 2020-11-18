@@ -1,5 +1,6 @@
 import { USER_LOGIN, USER_LOGOUT } from "./actionTypesAuth";
 import axios from "axios";
+import { SERVER_URL } from "../../constants/Constants";
 
 axios.defaults.withCredentials = true;
 
@@ -8,7 +9,7 @@ export const userLogin = (userData) => async (dispatch) => {
     const { email, password } = userData;
 
     const user = await axios.post(
-      "http://localhost:8000/api/v1/auth/login",
+      `${SERVER_URL}/api/v1/auth/login`,
       {
         email,
         password,
@@ -35,7 +36,7 @@ export const userLogin = (userData) => async (dispatch) => {
 
 export const userLogout = () => async (dispatch) => {
   try {
-    await axios.get("http://localhost:8000/api/v1/auth/logout", {
+    await axios.get(`${SERVER_URL}/api/v1/auth/logout`, {
       withCredentials: true,
     });
 
@@ -54,7 +55,7 @@ export const userLogout = () => async (dispatch) => {
 
 export const getUser = () => async (dispatch) => {
   try {
-    const user = await axios.get("http://localhost:8000/api/v1/users/search", {
+    const user = await axios.get(`${SERVER_URL}/api/v1/users/search`, {
       withCredentials: true,
     });
 

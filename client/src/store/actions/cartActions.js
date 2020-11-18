@@ -4,12 +4,13 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
 } from "../actions/actionTypesCart";
+import { SERVER_URL } from "../../constants/Constants";
 
 axios.defaults.withCredentials = true;
 
 export const getCart = () => async (dispatch) => {
   try {
-    const cart = await axios.get("http://localhost:8000/api/v1/cart/search", {
+    const cart = await axios.get(`${SERVER_URL}/api/v1/cart/search`, {
       withCredentials: true,
     });
 
@@ -51,16 +52,13 @@ export const addToCart = (cart, productId) => async (dispatch) => {
 
     axios.defaults.withCredentials = true;
 
-    const existingCart = await axios.get(
-      "http://localhost:8000/api/v1/cart/search",
-      {
-        withCredentials: true,
-      }
-    );
+    const existingCart = await axios.get(`${SERVER_URL}/api/v1/cart/search`, {
+      withCredentials: true,
+    });
 
     let newCart;
     if (!existingCart.data.data) {
-      newCart = await axios.post("http://localhost:8000/api/v1/cart", cartObj, {
+      newCart = await axios.post(`${SERVER_URL}/api/v1/cart`, cartObj, {
         headers: {
           withCredentials: true,
         },
@@ -68,7 +66,7 @@ export const addToCart = (cart, productId) => async (dispatch) => {
     } else {
       const cartId = existingCart.data.data._id;
       newCart = await axios.put(
-        `http://localhost:8000/api/v1/cart/${cartId}`,
+        `${SERVER_URL}/api/v1/cart/${cartId}`,
         cartObj,
         {
           headers: {
@@ -107,17 +105,14 @@ export const removeFromCart = (cart, productId) => async (dispatch) => {
 
     axios.defaults.withCredentials = true;
 
-    const existingCart = await axios.get(
-      "http://localhost:8000/api/v1/cart/search",
-      {
-        withCredentials: true,
-      }
-    );
+    const existingCart = await axios.get(`${SERVER_URL}/api/v1/cart/search`, {
+      withCredentials: true,
+    });
     let newCart;
     if (existingCart.data.data.cartItems.length) {
       const cartId = existingCart.data.data._id;
       newCart = await axios.put(
-        `http://localhost:8000/api/v1/cart/${cartId}`,
+        `${SERVER_URL}/api/v1/cart/${cartId}`,
         cartObj,
         {
           headers: {
@@ -149,7 +144,7 @@ const foundProductIndex = (cartArr, itemId) => {
 const getProduct = async (productId) => {
   try {
     const product = await axios.get(
-      `http://localhost:8000/api/v1/products/${productId}`
+      `${SERVER_URL}/api/v1/products/${productId}`
     );
 
     return product.data.data;

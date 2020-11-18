@@ -1,5 +1,6 @@
 import { ORDER_CHECKOUT } from "./actionTypesCheckout";
 import axios from "axios";
+import { SERVER_URL } from "../../constants/Constants";
 
 axios.defaults.withCredentials = true;
 
@@ -10,13 +11,9 @@ export const orderCheckout = () => async (dispatch) => {
       paymentState: "Paid",
     };
 
-    const order = await axios.post(
-      "http://localhost:8000/api/v1/order",
-      cartObj,
-      {
-        withCredentials: true,
-      }
-    );
+    const order = await axios.post(`${SERVER_URL}/api/v1/order`, cartObj, {
+      withCredentials: true,
+    });
 
     const payloadData = order.data.data;
 
@@ -31,7 +28,7 @@ export const orderCheckout = () => async (dispatch) => {
 
 export const getOrder = () => async (dispatch) => {
   try {
-    const order = await axios.get(`http://localhost:8000/api/v1/order/search`, {
+    const order = await axios.get(`${SERVER_URL}/api/v1/order/search`, {
       headers: {
         withCredentials: true,
       },
