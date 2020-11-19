@@ -26,7 +26,7 @@ connectDB();
 app.use(express.json()); // Body Parser
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "*",
     credentials: true,
   })
 ); // CORS
